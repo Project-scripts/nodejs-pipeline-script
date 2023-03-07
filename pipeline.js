@@ -35,10 +35,11 @@ const registerPipelineProjects = [
 
 /* Map user passed project names from `terminal` to respective project ids  */
 const extractProjectIdsFromArgument = (projectNames) => {
+    console.log(projectNames)
     let targetProjectIds = projectNames.map((targetName) => {
-        let t1 = targetName.toString().toLowerCase().replace(/[^a-zA-Z ]/g, "").replaceAll(' ', '')
+        let t1 = targetName.toString().toLowerCase().replace(/[^a-zA-Z ]/g, "")
         let targetProject = registerPipelineProjects.find((item) => {
-            let t2 = item.name.toLowerCase().replace(/[^a-zA-Z ]/g, "").replaceAll(' ', '')
+            let t2 = item.name.toLowerCase().replace(/[^a-zA-Z ]/g, "")
             return t1.includes(t2) || t2.includes(t1)
         })
         if(!targetProject) { return }

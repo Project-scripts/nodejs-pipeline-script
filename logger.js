@@ -23,12 +23,11 @@ const logProjectPipelines = (apiResults, targetProjects) => {
             if(eachResult == undefined) return false
             return eachResult.project?.name.toLowerCase() === eachTarget.name.toLowerCase() })
         if (!eachTargetProject) { return false }
-        console.log('eachTargetProject ' + JSON.stringify(eachTargetProject))
 
         /** traverse `nodes` */
         const pipelineNodes = eachTargetProject.project.pipelines.nodes
         const successOrFailurePipeline = [pipelineNodes.find((eachNode) => { 
-            return eachNode.ref === "develop"
+            return eachNode.ref === "develop" && eachNode.jobs?.nodes?.length > 0
          })]
         successOrFailurePipeline.forEach((each) => { prettyLogPipelineStatus(eachTargetProject.project, each) } )
         return true
@@ -41,19 +40,19 @@ const prettyLogPipelineStatus = (project, data) => {
         return
     }
 
-    console.log(`Bank Name         : ${project.name}`)
-    console.log(`Branch Name       : ${data.ref ?? "N/A"}`)
-    console.log(`Create date       : ${getFormattedDate(data.createdAt)}`)
-    console.log(`Developer         : ${data.user.name}`)
-    console.log(`Project link      : ${project.webUrl}/pipelines`)
-
+    console.log(logger.cyan(`\n\n********** Project ${project.name} **********`))
+    console.log(`  Branch Name       : ${data.ref ?? "N/A"}`)
+    console.log(`  Recent Pipeline   : ${getFormattedDate(data.createdAt)}`)
+    console.log(`  Developer         : ${data.user.name}`)
+    console.log(`  Project link      : ${project.webUrl}/pipelines`)
     let lowerStatus = data.status.toLowerCase()
     let pipelineStatus = data.status === PIPELINE_CANCELED ? lowerStatus + ` but may be success for QA/UAT` : lowerStatus
    
     const stageJobs = data.jobs.nodes.filter((eachJob)=> { return FILTER_JOBS.includes(eachJob.name) })
     stageJobs.forEach((item) => {
-        logByPipelineStatus(item.status, ` \t\t${item?.name} -> ${item.status}`)
+        logByPipelineStatus(item.status, `  ${item?.name} -> ${item.status}`)
     })
+    console.log(logger.cyan(`***************** End ***************`))
 }
 
 function logByPipelineStatus(status, data) {

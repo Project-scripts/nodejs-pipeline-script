@@ -11,7 +11,7 @@ const argumentParser = (argument) => {
 
     if (argumentAnnonation.includes("-p")) {
         const argumentData = argument.slice(3) + "" // get third argument from terminal
-        const argumentDataList = argumentData.split(" ")
+        const argumentDataList = argumentData.split(",")
         if (argumentData && argumentDataList.length > 0) {
             return { type: FETCH_MENTIONED_PROJECTS, data: argumentDataList }
         }

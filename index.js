@@ -27,7 +27,6 @@ function executeProjectPipelines(argumentData) {
       /** Wait for all pending promises, similar to `rx.zip(...)` */
       Promise.all(targetProjectInformations.map((data) => fetchSingleProjectPipeline(data)))
       .then((mergedResults) => {
-        console.log('FETCH_MENTIONED_PROJECTS -> '+ JSON.stringify(mergedResults))
           logProjectPipelines(mergedResults, targetProjectInformations)
       }).catch((error) => {
         console.error('Error '+ error)
