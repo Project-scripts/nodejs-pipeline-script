@@ -2,7 +2,7 @@ const { GraphQLClient } = require('graphql-request');
 const { argumentParser, FETCH_MENTIONED_PROJECTS, FETCH_ALL_PROJECTS } = require('./argument')
 const { extractProjectIdsFromArgument } = require('./pipeline')
 const { buildGroupPipelineQuery, buildSinglePipelineQuery } = require('./graphql')
-const { logProjectPipelines } = require('./logger')
+const { logProjectPipelines } = require('./logger.js')
 
 const API_ENDPOINT = 'https://gitlab-01.f1soft.com/api/graphql/'
 const ACCESS_TOKEN = 'r4py3wXksc4HWP2zsa8B'

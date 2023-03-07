@@ -1,10 +1,10 @@
 const { formatDistance } = require('date-fns');
+const logger = require('node-color-log')
 
 const PIPELINE_SUCCESS = "SUCCESS"
 const PIPELINE_MANUAL = "MANUAL"
 const PIPELINE_FAILED = "FAILED"
 const PIPELINE_CANCELED = "CANCELED"
-const PIPELINE_PASSED = "PASSED"
 
 const FILTER_JOBS = ['uat', 'qa', 'testflight']
 
@@ -19,7 +19,12 @@ const logProjectPipelines = (apiResults, targetProjects) => {
         /** traverse `nodes` */
         const pipelineNodes = eachTargetProject.project.pipelines.nodes
         const successOrFailurePipeline = [pipelineNodes.find((eachNode) => { 
-            return eachNode.ref === "develop" && ( eachNode.status === PIPELINE_SUCCESS || eachNode.status ===  PIPELINE_FAILED)
+            return eachNode.ref === "develop"
+             && ( 
+                eachNode.status === PIPELINE_SUCCESS || 
+                eachNode.status === PIPELINE_CANCELED || 
+                eachNode.status ===  PIPELINE_FAILED
+            )
          })]
         successOrFailurePipeline.forEach((each) => { prettyLogPipelineStatus(eachTargetProject.project, each) } )
         return true
@@ -43,12 +48,27 @@ const prettyLogPipelineStatus = (project, data) => {
 
     let lowerStatus = data.status.toLowerCase()
     let pipelineStatus = data.status === PIPELINE_CANCELED ? lowerStatus + ` but may be success for QA/UAT` : lowerStatus
-    console.log(`Pipeline Status   : ${pipelineStatus}`)
-
+   
     const stageJobs = data.jobs.nodes.filter((eachJob)=> { return FILTER_JOBS.includes(eachJob.name) })
     stageJobs.forEach((item) => {
-        console.log(` \t\t${item?.name} -> ${item.status}`)
+        logByPipelineStatus(item.status, ` \t\t${item?.name} -> ${item.status}`)
     })
+}
+
+function logByPipelineStatus(status, data) {
+    switch (status) {
+        case PIPELINE_SUCCESS:
+            logger.color('green').log(data)
+            break
+        case PIPELINE_FAILED: 
+            logger.color('white').log(data)
+            break
+        case PIPELINE_MANUAL:
+            logger.color('white').log(data)
+            break
+        default:
+            logger.log(data)
+    }
 }
 
 const getFormattedDate = (createdAt) => {
