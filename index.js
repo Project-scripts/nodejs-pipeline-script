@@ -29,6 +29,8 @@ function executeProjectPipelines(argumentData) {
       .then((mergedResults) => {
         console.log('FETCH_MENTIONED_PROJECTS -> '+ JSON.stringify(mergedResults))
           logProjectPipelines(mergedResults, targetProjectInformations)
+      }).catch((error) => {
+        console.error('Error '+ error)
       })
       break
 
@@ -36,6 +38,8 @@ function executeProjectPipelines(argumentData) {
       fetchGroupProjectsPipeline(GROUP_PATH)
       .then((data) => {
         console.log('FETCH_ALL_PROJECTS -> '+ JSON.stringify(data))
+      }).catch((error) => {
+        console.error('Error '+ error)
       })
   }
 }

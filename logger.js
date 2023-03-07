@@ -1,12 +1,21 @@
 const { formatDistance } = require('date-fns');
-const logger = require('node-color-log')
+var logger = require("cli-color")
 
 const PIPELINE_SUCCESS = "SUCCESS"
 const PIPELINE_MANUAL = "MANUAL"
 const PIPELINE_FAILED = "FAILED"
 const PIPELINE_CANCELED = "CANCELED"
+const PIPELINE_RUNNING = "RUNNING"
 
 const FILTER_JOBS = ['uat', 'qa', 'testflight']
+
+const loggerSetting = {
+    bold: true,
+    dim: false,
+    underscore: true,
+    italic: false,
+    strikethrough: false
+}
 
 const logProjectPipelines = (apiResults, targetProjects) => {
     targetProjects.filter((eachTarget) => {
@@ -20,17 +29,9 @@ const logProjectPipelines = (apiResults, targetProjects) => {
         const pipelineNodes = eachTargetProject.project.pipelines.nodes
         const successOrFailurePipeline = [pipelineNodes.find((eachNode) => { 
             return eachNode.ref === "develop"
-             && ( 
-                eachNode.status === PIPELINE_SUCCESS || 
-                eachNode.status === PIPELINE_CANCELED || 
-                eachNode.status ===  PIPELINE_FAILED
-            )
          })]
         successOrFailurePipeline.forEach((each) => { prettyLogPipelineStatus(eachTargetProject.project, each) } )
         return true
-        // const pendingManualPipeline = pipelineNodes.find((eachNode) => { 
-        //     eachNode.status === PIPELINE_MANUAL && eachNode.ref === "develop" 
-        // })
     })
 }
 
@@ -58,16 +59,22 @@ const prettyLogPipelineStatus = (project, data) => {
 function logByPipelineStatus(status, data) {
     switch (status) {
         case PIPELINE_SUCCESS:
-            logger.color('green').log(data)
+            console.log(logger.green(data))
             break
         case PIPELINE_FAILED: 
-            logger.color('white').log(data)
+            console.log(logger.red(data +' but might have succeded') )
+             break
+        case PIPELINE_CANCELED:
+            console.log(logger.red(data))
             break
         case PIPELINE_MANUAL:
-            logger.color('white').log(data)
+            console.log(logger.blue(data))
+            break
+        case PIPELINE_RUNNING:
+            console.log(logger.yellowBright(data))
             break
         default:
-            logger.log(data)
+            console.log(logger.white(data))
     }
 }
 
