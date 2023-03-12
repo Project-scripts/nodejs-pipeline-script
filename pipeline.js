@@ -30,6 +30,18 @@ const registerPipelineProjects = [
     {
         id: 1032,
         name: 'citizens'
+    },
+    {
+        id: 1032,
+        name: 'citizens'
+    },
+    {
+        id: 1003,
+        name: "sunrise",
+    },
+    {
+        id: 1133,
+        name: 'jyoti-bikash-bank'
     }
 ]
 
