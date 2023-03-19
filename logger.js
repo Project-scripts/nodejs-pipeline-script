@@ -7,15 +7,8 @@ const PIPELINE_FAILED = "FAILED"
 const PIPELINE_CANCELED = "CANCELED"
 const PIPELINE_RUNNING = "RUNNING"
 
+/** Replace with your own job name  */
 const FILTER_JOBS = ['uat', 'qa', 'testflight']
-
-const loggerSetting = {
-    bold: true,
-    dim: false,
-    underscore: true,
-    italic: false,
-    strikethrough: false
-}
 
 const logProjectPipelines = (apiResults, targetProjects) => {
     targetProjects.filter((eachTarget) => {

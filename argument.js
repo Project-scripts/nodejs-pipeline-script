@@ -15,12 +15,12 @@ const argumentParser = (argument) => {
         if (argumentData && argumentDataList.length > 0) {
             return { type: FETCH_MENTIONED_PROJECTS, data: argumentDataList }
         }
-        throw 'Did u forget to pass project names like -p "nabil kumari sanima ....." '
+        throw 'Did u forget to pass project names like -p "A-PROJECT, B-PROJECT, C-PROJECT ....." '
     } else if (argumentAnnonation.includes("-a")) {
         return { type: FETCH_ALL_PROJECTS, data: undefined }
     }
 
-    throw 'Did u forget to pass arguments for example: \n for specific projects use `-p "nabil kumari sanim"` \n for all projects `-a`" '
+    throw 'Did u forget to pass arguments for example: \n for specific projects use `-p "A-PROJECT, B-PROJECT, C-PROJECT ....."` \n for all projects `-a`" '
 }
 
 module.exports = { FETCH_ALL_PROJECTS, FETCH_MENTIONED_PROJECTS, argumentParser }

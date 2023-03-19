@@ -1,19 +1,8 @@
-const buildGroupPipelineQuery = (path) => {
-  const query = `
-  query {
-    group(fullPath: "${path}") {
-      projects {
-        nodes {
-          pipelines(first: 1) {
-            name
-          }
-        }
-      }
-    }
-  }
-`;
-return query
-} 
+
+/*  Prefetch 12 number of pipeline at once
+    @Note: Increase this value if necessary
+ */
+const offSet = 12
 
 const buildSinglePipelineQuery = (path, data) => {
   const query = `
@@ -21,7 +10,7 @@ const buildSinglePipelineQuery = (path, data) => {
     project(fullPath: "${path}/${data.name}") {
       name
       webUrl
-      pipelines(first: 12) {
+      pipelines(first: ${offSet}) {
         nodes {
           status
           ref
@@ -43,4 +32,4 @@ const buildSinglePipelineQuery = (path, data) => {
 return query
 }
 
-module.exports = { buildGroupPipelineQuery, buildSinglePipelineQuery }
+module.exports = { buildSinglePipelineQuery }
