@@ -4,6 +4,14 @@
   */
 const registerPipelineProjects = [
     {
+        id: 1435,
+        name: 'shine-resunga'
+    },
+    {
+        id: 1470,
+        name: 'rbb'
+    },
+    {
         id: 1133,
         name: 'laxmi'
     },
@@ -28,8 +36,8 @@ const registerPipelineProjects = [
         name: 'nicasia'
     },
     {
-        id: 1032,
-        name: 'citizens'
+        id: 1002,
+        name: 'everest'
     },
     {
         id: 1032,
@@ -42,6 +50,10 @@ const registerPipelineProjects = [
     {
         id: 1133,
         name: 'jyoti-bikash-bank'
+    },
+    {
+        id: 1209,
+        name: 'siddhartha'
     }
 ]
 

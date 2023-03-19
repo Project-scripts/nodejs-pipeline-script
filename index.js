@@ -59,7 +59,7 @@ async function fetchSingleProjectPipeline(data) {
 /**
  * Psuedo code
  * 1. Filter pipeline by ref: develop ( create arrays)
- * 2. Filter via priority order: SUCCESS -> RUNNING -> CANCELLED -> UNDEFINED ( find first item as `CURRENT_PIPELINE` )
+ * 2. Filter via priority order: SUCCESS -> RUNNING -> CANCELLED -> UNDEFINED
  * 3. Format `CURRENT_PIPELINE`'s JOBS ( uat, qa, testflight)
  * Colors: red: failed,
  *         green: success,

@@ -21,7 +21,7 @@ const buildSinglePipelineQuery = (path, data) => {
     project(fullPath: "${path}/${data.name}") {
       name
       webUrl
-      pipelines(first: 10) {
+      pipelines(first: 12) {
         nodes {
           status
           ref
